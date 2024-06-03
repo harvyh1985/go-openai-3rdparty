@@ -72,6 +72,16 @@ func DefaultAzureConfig(apiKey, baseURL string) ClientConfig {
 	}
 }
 
+func ThirdPartyConfig(token, baseUrl string) ClientConfig {
+	return ClientConfig{
+		authToken:          token,
+		BaseURL:            baseUrl,
+		APIType:            APITypeOpenAI,
+		HTTPClient:         &http.Client{},
+		EmptyMessagesLimit: defaultEmptyMessagesLimit,
+	}
+}
+
 func (ClientConfig) String() string {
 	return "<OpenAI API ClientConfig>"
 }
