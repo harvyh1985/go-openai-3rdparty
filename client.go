@@ -51,6 +51,18 @@ func NewClient(authToken string) *Client {
 }
 
 // NewClientWithConfig creates new OpenAI API client for specified config.
+func NewClientWithTokenAndConfig(token string, config ClientConfig) *Client {
+	config.authToken = token
+	return &Client{
+		config:         config,
+		requestBuilder: utils.NewRequestBuilder(),
+		createFormBuilder: func(body io.Writer) utils.FormBuilder {
+			return utils.NewFormBuilder(body)
+		},
+	}
+}
+
+// NewClientWithConfig creates new OpenAI API client for specified config.
 func NewClientWithConfig(config ClientConfig) *Client {
 	return &Client{
 		config:         config,
