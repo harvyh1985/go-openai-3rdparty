@@ -20,6 +20,7 @@ const (
 	APITypeAzure           APIType = "AZURE"
 	APITypeAzureAD         APIType = "AZURE_AD"
 	APITypeCloudflareAzure APIType = "CLOUDFLARE_AZURE"
+	APITypeOpenRouter      APIType = "OpenRouter"
 )
 
 const AzureAPIKeyHeader = "api-key"

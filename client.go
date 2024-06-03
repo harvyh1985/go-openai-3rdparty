@@ -51,18 +51,6 @@ func NewClient(authToken string) *Client {
 }
 
 // NewClientWithConfig creates new OpenAI API client for specified config.
-func NewClientWithTokenAndConfig(token string, config ClientConfig) *Client {
-	config.authToken = token
-	return &Client{
-		config:         config,
-		requestBuilder: utils.NewRequestBuilder(),
-		createFormBuilder: func(body io.Writer) utils.FormBuilder {
-			return utils.NewFormBuilder(body)
-		},
-	}
-}
-
-// NewClientWithConfig creates new OpenAI API client for specified config.
 func NewClientWithConfig(config ClientConfig) *Client {
 	return &Client{
 		config:         config,
@@ -257,7 +245,10 @@ func (c *Client) fullURL(suffix string, args ...any) string {
 			azureDeploymentName, suffix, c.config.APIVersion,
 		)
 	}
-
+	if c.config.APIType == APITypeOpenRouter {
+		baseURL := c.config.BaseURL
+		baseURL = strings.TrimRight(baseURL, "/")
+	}
 	// https://developers.cloudflare.com/ai-gateway/providers/azureopenai/
 	if c.config.APIType == APITypeCloudflareAzure {
 		baseURL := c.config.BaseURL
