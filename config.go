@@ -73,12 +73,12 @@ func DefaultAzureConfig(apiKey, baseURL string) ClientConfig {
 	}
 }
 
-func ThirdPartyConfig(apiKey, baseURL string) ClientConfig {
+func ThirdPartyConfig(apiKey, baseURL string, apiType APIType) ClientConfig {
 	return ClientConfig{
 		authToken:          apiKey,
 		BaseURL:            baseURL,
 		OrgID:              "",
-		APIType:            APITypeOpenAI,
+		APIType:            apiType,
 		HTTPClient:         &http.Client{},
 		EmptyMessagesLimit: defaultEmptyMessagesLimit,
 	}
