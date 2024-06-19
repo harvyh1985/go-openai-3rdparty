@@ -220,6 +220,45 @@ type ChatCompletionRequest struct {
 	StreamOptions *StreamOptions `json:"stream_options,omitempty"`
 }
 
+type ThirdPartyChatCompletionRequest struct {
+	Messages          []ChatCompletionMessage       `json:"messages"`
+	Stream            bool                          `json:"stream"`
+	Model             string                        `json:"model"`
+	MaxTokens         float64                       `json:"max_tokens"`
+	Temperature       float64                       `json:"temperature"`
+	RepetitionPenalty float64                       `json:"repetition_penalty"`
+	PresencePenalty   float64                       `json:"presence_penalty"`
+	FrequencyPenalty  float64                       `json:"frequency_penalty"`
+	TopK              float64                       `json:"top_k"`
+	MinP              float64                       `json:"min_p"`
+	TopP              float64                       `json:"top_p"`
+	TopA              float64                       `json:"top_a"`
+	Seed              float64                       `json:"Seed"`
+	ResponseFormat    *ChatCompletionResponseFormat `json:"response_format"`
+	// LogitBias is must be a token id string (specified by their token ID in the tokenizer), not a word string.
+	// incorrect: `"logit_bias":{"You": 6}`, correct: `"logit_bias":{"1639": 6}`
+	// refs: https://platform.openai.com/docs/api-reference/chat/create#chat/create-logit_bias
+	LogitBias map[string]int `json:"logit_bias,omitempty"`
+	// LogProbs indicates whether to return log probabilities of the output tokens or not.
+	// If true, returns the log probabilities of each output token returned in the content of message.
+	// This option is currently not available on the gpt-4-vision-preview model.
+	LogProbs bool `json:"logprobs,omitempty"`
+	// TopLogProbs is an integer between 0 and 5 specifying the number of most likely tokens to return at each
+	// token position, each with an associated log probability.
+	// logprobs must be set to true if this parameter is used.
+	TopLogProbs int    `json:"top_logprobs,omitempty"`
+	User        string `json:"user,omitempty"`
+	// Deprecated: use Tools instead.
+	Functions []FunctionDefinition `json:"functions,omitempty"`
+	// Deprecated: use ToolChoice instead.
+	FunctionCall any    `json:"function_call,omitempty"`
+	Tools        []Tool `json:"tools,omitempty"`
+	// This can be either a string or an ToolChoice object.
+	ToolChoice any `json:"tool_choice,omitempty"`
+	// Options for streaming response. Only set this when you set stream: true.
+	StreamOptions *StreamOptions `json:"stream_options,omitempty"`
+}
+
 type StreamOptions struct {
 	// If set, an additional chunk will be streamed before the data: [DONE] message.
 	// The usage field on this chunk shows the token usage statistics for the entire request,
