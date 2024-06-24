@@ -3,6 +3,7 @@ package openai
 import (
 	"net/http"
 	"regexp"
+	"time"
 )
 
 const (
@@ -73,13 +74,15 @@ func DefaultAzureConfig(apiKey, baseURL string) ClientConfig {
 	}
 }
 
-func ThirdPartyConfig(apiKey, baseURL string, apiType APIType) ClientConfig {
+func ThirdPartyConfig(apiKey, baseURL string, apiType APIType, timeout time.Duration) ClientConfig {
 	return ClientConfig{
-		authToken:          apiKey,
-		BaseURL:            baseURL,
-		OrgID:              "",
-		APIType:            apiType,
-		HTTPClient:         &http.Client{},
+		authToken: apiKey,
+		BaseURL:   baseURL,
+		OrgID:     "",
+		APIType:   apiType,
+		HTTPClient: &http.Client{
+			Timeout: timeout,
+		},
 		EmptyMessagesLimit: defaultEmptyMessagesLimit,
 	}
 }
