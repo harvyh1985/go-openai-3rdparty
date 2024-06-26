@@ -256,10 +256,12 @@ type ThirdPartyChatCompletionRequest struct {
 	// This can be either a string or an ToolChoice object.
 	ToolChoice any `json:"tool_choice,omitempty"`
 	// Options for streaming response. Only set this when you set stream: true.
-	StreamOptions *StreamOptions `json:"stream_options,omitempty"`
-	Provider      struct {
-		Order []string `json:"order"`
-	} `json:"provider"`
+	StreamOptions *StreamOptions                          `json:"stream_options,omitempty"`
+	Provider      ThirdPartyChatCompletionRequestProvider `json:"provider"`
+}
+
+type ThirdPartyChatCompletionRequestProvider struct {
+	Order []string `json:"order"`
 }
 
 type StreamOptions struct {
